@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Itinerary</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">TripPlanner</a>
+        <a href="/api/cities">Explore</a>
+        <a href="/create-itinerary">Create Itinerary</a>
+        <a href="/my-itineraries" class="my-itineraries">My Itineraries</a>
+      </nav>
+
+  <h1>Create Itinerary</h1>
+  <form id="itineraryForm" method="POST" action="/create-itinerary">
+    <input type="text" name="itineraryName" placeholder="Itinerary Name" required>
+  
+    <div id="cities">
+    </div>
+    <button type="button" onclick="addCity()">Add City</button><br><br>
+  
+    <button type="submit">Create Itinerary</button>
+  </form>
+  
+  <script src="form.js"></script>
+</body>
+</html>

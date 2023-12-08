@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore Cities</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">TripPlanner</a>
+        <a href="/explore">Explore</a>
+        <a href="/create-itinerary">Create Itinerary</a>
+        <a href="/my-itineraries" class="my-itineraries">My Itineraries</a>
+      </nav>
+      <h1>Let's Explore!</h1>
+    <input type="text" id="citySearch" placeholder="Search for a city...">
+    <button onclick="searchCities()">Search</button>
+
+    <div id="citiesContainer"></div>
+    <div id="placesContainer"></div>
+
+    <script src="explore.js"></script>
+</body>
+</html>
