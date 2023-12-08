@@ -133,3 +133,186 @@ button:hover, .modern-button:hover {
         padding-top: 130px;
     }
 }
+
+
+
+
+/*--css style by Eric--*/
+
+
+
+.active {
+  font-weight: bold; /* Makes the font bolder */
+  color: #FFFFFF; /* Change font color */
+  background-color: #007BFF; /* Distinct background color */
+
+}
+
+
+
+.container {
+    width: 80%;
+    opacity: 0.85; 
+    margin: auto;
+    overflow: hidden;
+    background-color: #7b7b7b;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background-image: url('someimage.jpg');
+    background-size: cover;  
+    background-position: center; 
+    height: 200px;
+   
+    text-align: center; 
+    line-height: 200px; 
+}
+
+
+nav ul {
+    padding: 0;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #0012d6;
+}
+
+nav li {
+    float: left;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    background-color: #2c039c;
+}
+
+nav li a.active {
+    background-color: #e49d70;
+}
+
+
+
+/* 9. main content styling */
+main {
+    font-family: 'Arial', sans-serif;
+    background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* 10. Styling for form elements */
+form {
+    margin-top: 20px;
+}
+
+button[type="submit"] {
+    background-color: #ff6302;
+    transition: background-color 0.3s ease; /* smooth color transition on hover */
+}
+
+button[type="submit"]:hover {
+    background-color: #000000;
+}
+
+/* 11. Additional styling for links to make them more appealing */
+a {
+    transition: color 0.3s ease; /* smooth color transition on hover */
+}
+
+a:hover {
+    color: #ff4500;
+}
+
+/* 12. Footer styling (Assuming you might add a footer later) */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+    color: #fff;
+    margin-top: 20px;
+}
+
+
+
+
+/* Card Styles */
+.card {
+  width: 200px; /* or your preferred width */
+  height: 300px; /* or your preferred height */
+  perspective: 1000px; /* Enables 3D effects */
+  margin: 15px; /* Spacing between cards */
+}
+
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Correctly set for both sides */
+}
+
+
+/* this makes front card invisible when flipped */
+.card-front {
+  transform: rotateY(0deg); 
+}
+
+
+.card-back {
+  /* Styling for the back of the card */
+  transform: rotateY(180deg); /* Flips the back of the card to be the reverse side */
+}
+
+
+.itinerary-map {
+  height: 200px; /* Adjust as needed */
+  width: 100%; /* Adjust if necessary */
+}
+
+
+.card-container {
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-container:hover {
+  transform: scale(1.05);
+}
+
+
+.card-link {
+  text-decoration: none; /* Removes underline from links */
+  color: inherit; /* Inherits the color from parent elements */
+  display: block; /* Makes the link a block-level element */
+}
+
+
+.itinerary-image {
+  width: 100%; /* Makes the image take full width of the card */
+  height: auto; /* Keeps the aspect ratio of the image */
+  border-radius: 5px; /* Optional: Adds rounded corners to the image */
+}

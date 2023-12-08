@@ -62,3 +62,37 @@ async function searchCities() {
         citiesContainer.appendChild(cityDiv);
     });
 }
+
+
+
+// following added by Eric
+
+const placeApiUrl = "https://tripplanner-j6oq.onrender.com/city/place?cityId=";
+const baseApiUrl = "https://tripplanner-j6oq.onrender.com/city/all";
+const explorePageUrl = 'https://tripplanner-j6oq.onrender.com/places.html?city=';
+
+document.getElementById('searchButton').addEventListener('click', async function(event) {
+    event.preventDefault();
+    var cityName = document.getElementById('citySearch').value;
+    localStorage.setItem('citySearch', cityName);
+
+    var summary = "Selected City: " + cityName;
+    document.getElementById('citiesContainer').innerHTML = summary;
+
+    try {
+        const response = await fetch(baseApiUrl);
+        const citiesData = await response.json();
+        const cityInfo = citiesData.find(city => city.name.toLowerCase() === cityName.toLowerCase());
+
+        if (cityInfo) {
+            const city_id = cityInfo.city_id;
+
+            // return to page where reads all existing itineraries
+            window.location.href = "page_itinerary.html";
+        } else {
+            window.location.href = explorePageUrl + encodeURIComponent(cityName);
+        }
+    } catch (error) {
+        console.error("Failed to fetch city list:", error);
+    }
+});
