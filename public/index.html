@@ -8,14 +8,37 @@
 </head>
 <body>
   <nav class="navbar">
-    <a href="/">TripPlanner</a>
-    <a href="/explore">Explore</a>
-    <a href="/create-itinerary">Create Itinerary</a>
-    <a href="/my-itineraries" class="my-itineraries">My Itineraries</a>
+    <a href="#home" class="tab active">TripPlanner</a>
+    <a href="explore.html" class="tab">Explore</a>
+    <a href="create-itinerary.html" class="tab">Create Itinerary</a>
+    <a href="#my-itineraries" class="tab">My Itineraries</a>
   </nav>
+
   
   <h1>A Platform for Travel Enthusiasts</h1>
   <h3>Built by travelers for travelers</h3>
-  <a href="/create-itinerary" class="modern-button">Create Itinerary</a>
+  <a href="create-itinerary.html" class="modern-button">Create Itinerary</a>
 </body>
+
+
+<script>
+  var activeLink = document.getElementById('index.html');
+    if (activeLink) {
+        activeLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.reload(true);
+        });
+    }
+</script>
 </html>
+
+
+<!-- 
+<nav>
+  <ul>
+      <li><a href="index.html" id="homeLink" class="active">Home</a></li>
+      <li><a href="page_make.html" id="page1Link">Make Your Trip</a></li>
+      <li><a href="page_itinerary.html" id="page2Link" >Places to Explore</a></li>
+      <li><a href="page_contact.html" id="page3Link">Contact</a></li>
+  </ul>
+</nav> -->

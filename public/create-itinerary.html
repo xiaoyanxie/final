@@ -7,9 +7,9 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="/">TripPlanner</a>
-        <a href="/api/cities">Explore</a>
-        <a href="/create-itinerary">Create Itinerary</a>
+        <a href="index.html">TripPlanner</a>
+        <a href="explore.html">Explore</a>
+        <a href="create-itinerary.html">Create Itinerary</a>
         <a href="/my-itineraries" class="my-itineraries">My Itineraries</a>
       </nav>
 
@@ -25,5 +25,15 @@
   </form>
   
   <script src="form.js"></script>
+
+  <script>
+    var activeLink = document.getElementById('create-itinerary.html');
+      if (activeLink) {
+          activeLink.addEventListener('click', function(e) {
+              e.preventDefault();
+              window.location.reload(true);
+          });
+      }
+  </script>
 </body>
 </html>

@@ -96,3 +96,5 @@ document.getElementById('searchButton').addEventListener('click', async function
         console.error("Failed to fetch city list:", error);
     }
 });
+
+

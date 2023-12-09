@@ -2,7 +2,7 @@
 
 
 
-// const baseApiUrl = "https://tripplanner-j6oq.onrender.com/city/all";
+const baseApiUrl = "https://tripplanner-j6oq.onrender.com/city/all";
 // // const placeApiUrl = "https://tripplanner-j6oq.onrender.com/city/place?cityId=65714d915061ce501bbad3b7"
 
 // // cardLink.href = 'https://tripplanner-j6oq.onrender.com/places.html?city=' + encodeURIComponent(itinerary.name);
