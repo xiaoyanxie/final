@@ -39,6 +39,15 @@ app.get('/api/cities', async (req, res) => {
 
 app.get('/api/itineraries', async (req, res) => {
     const itinerariesCollection = db.getCollection('itineraries');
+
+    const itineraryId = req.query.id;
+    if (itineraryId) {
+        const objId = new ObjectId(itineraryId)
+        const itinerary = await itinerariesCollection.findOne(objId);
+        res.json(itinerary);
+        return;
+    }
+
     const itineraries = await itinerariesCollection.find({}).toArray();
     res.json(itineraries);
 });
