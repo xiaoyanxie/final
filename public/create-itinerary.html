@@ -7,23 +7,24 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="index.html">TripPlanner</a>
-        <a href="explore.html">Explore</a>
-        <a href="create-itinerary.html">Create Itinerary</a>
-        <a href="/my-itineraries" class="my-itineraries">My Itineraries</a>
-      </nav>
+        <a href="index.html" class="tab active">TripPlanner</a>
+        <a href="explore.html" class="tab">Explore</a>
+        <a href="create-itinerary.html" class="tab">Create Itinerary</a>
+        <a href="page_itinerary.html" class="tab">My Itineraries</a>
+        <a href="places.html" class="tab">Exciting Places</a>
+    </nav>
 
   <h1>Create Itinerary</h1>
   <form id="itineraryForm" method="POST" action="/create-itinerary">
     <input type="text" name="itineraryName" placeholder="Itinerary Name" required>
-  
+
     <div id="cities">
     </div>
     <button type="button" onclick="addCity()">Add City</button><br><br>
-  
+
     <button type="submit">Create Itinerary</button>
   </form>
-  
+
   <script src="form.js"></script>
 
   <script>
