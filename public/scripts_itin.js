@@ -2,12 +2,12 @@
 
 
 
-const baseApiUrl = "https://tripplanner-j6oq.onrender.com/city/all";
+const baseApiUrl = "/city/all";
 // // const placeApiUrl = "https://tripplanner-j6oq.onrender.com/city/place?cityId=65714d915061ce501bbad3b7"
 
 // // cardLink.href = 'https://tripplanner-j6oq.onrender.com/places.html?city=' + encodeURIComponent(itinerary.name);
 
-async function fetchItinerariesData() {
+async function getAllCities() {
     try {
         const response = await fetch(baseApiUrl);
         const data = await response.json();
@@ -19,14 +19,14 @@ async function fetchItinerariesData() {
 }
 
 function createCard(itinerary) {
-    var cardContainer = document.createElement('div');
+    const cardContainer = document.createElement('div');
     cardContainer.className = 'card-container';
 
-    var cardLink = document.createElement('a');
-    cardLink.href = 'https://tripplanner-j6oq.onrender.com/places.html?city=' + encodeURIComponent(itinerary.name);
+    const cardLink = document.createElement('a');
+    cardLink.href = 'google_map.html?city=' + encodeURIComponent(itinerary.name);
     cardLink.className = 'card-link';
 
-    var card = document.createElement('div');
+    const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
         <div class="card-inner">
@@ -49,18 +49,18 @@ function createCard(itinerary) {
     return cardContainer;
 }
 
-function renderItineraries(data) {
-    var itinerariesContainer = document.getElementById('itineraries');
-    data.forEach(function(itinerary) {
-        itinerariesContainer.appendChild(createCard(itinerary));
+function renderCities(data) {
+    const citiesContainer = document.getElementById('cities');
+    data.forEach(function(city) {
+        citiesContainer.appendChild(createCard(city));
     });
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const fetchedData = await fetchItinerariesData();
+    const allCities = await getAllCities();
 
-    if (fetchedData.length > 0) {
-        renderItineraries(fetchedData);
+    if (allCities.length > 0) {
+        renderCities(allCities);
     } else {
         console.log('No itineraries available');
     }
@@ -69,19 +69,22 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('cityForm').addEventListener('submit', async function(event) {
         event.preventDefault();
         const cityName = document.getElementById('cityInput').value;
+        console.log(`User entered city name: ${cityName}`);
         localStorage.setItem('cityName', cityName);
 
-        const cities = await fetchItinerariesData();
+        const cities = await getAllCities();
         if (cities.map(city => city.name).includes(cityName)) {
+            console.log(`City ${cityName} exists in the database, redirecting to itinerary page`);
             // Redirect to the itinerary page if city exists in the database
             window.location.href = 'itineraryPage.html';
         } else {
+            console.log(`City ${cityName} does not exist in the database, redirecting to explore page`);
             // Redirect to the explore page and append the city to the end of the URL
             window.location.href = 'explorePage.html?city=' + encodeURIComponent(cityName);
         }
     });
 
-    var activeLink = document.getElementById('page2Link');
+    const activeLink = document.getElementById('page2Link');
     if (activeLink) {
         activeLink.addEventListener('click', function(e) {
             e.preventDefault();

@@ -67,23 +67,23 @@ async function searchCities() {
 
 // following added by Eric
 
-const placeApiUrl = "https://tripplanner-j6oq.onrender.com/city/place?cityId=";
-const baseApiUrl = "https://tripplanner-j6oq.onrender.com/city/all";
-const explorePageUrl = 'https://tripplanner-j6oq.onrender.com/places.html?city=';
+const placeApiUrl = "/city/place?cityId=";
+const baseApiUrl = "/city/all";
+const explorePageUrl = '/google_map.html?city=';
 
 document.getElementById('searchButton').addEventListener('click', async function(event) {
     event.preventDefault();
-    var cityName = document.getElementById('citySearch').value;
+    const cityName = document.getElementById('citySearch').value;
     localStorage.setItem('citySearch', cityName);
 
-    var summary = "Selected City: " + cityName;
-    document.getElementById('citiesContainer').innerHTML = summary;
+    document.getElementById('citiesContainer').innerHTML = "Selected City: " + cityName;
 
     try {
         const response = await fetch(baseApiUrl);
         const citiesData = await response.json();
+        console.log(citiesData);
         const cityInfo = citiesData.find(city => city.name.toLowerCase() === cityName.toLowerCase());
-
+        console.log(cityInfo);
         if (cityInfo) {
             const city_id = cityInfo.city_id;
 
