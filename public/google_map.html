@@ -23,10 +23,20 @@
 
 <div id="map"></div>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-lTyiOQtkTztPb4brRo0y18EwXL5oBBY&callback=initMap&libraries=places">
-</script>
+<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-lTyiOQtkTztPb4brRo0y18EwXL5oBBY&callback=initMap&libraries=places">-->
+<!--</script>-->
 
 <script>
+    fetch('/api/getKey')
+        .then(response => response.json())
+        .then(data => {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${data.key}&callback=initMap&libraries=places`;
+            script.async = true;
+            script.defer = true;
+            document.body.appendChild(script);
+        });
+
     let map;
     let service;
     let infowindow;
@@ -107,7 +117,7 @@
     }
     //Function: Get the pic of the marked museums, restaurants or attractions
     function getPlaceDetails(placeId, marker) {
-        var request = {
+        const request = {
             placeId: placeId,
             fields: ['name', 'formatted_address', 'photos']
         }
