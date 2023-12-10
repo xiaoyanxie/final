@@ -2,11 +2,6 @@ const db = require("./db")
 
 exports.getAll = async function() {
     const cities = await db.CitiesModel.find().exec()
-    const collectionNames = await db.getCollectionNames();
-    for (let i = 0; i < collectionNames.length; i++){
-        console.log(collectionNames[i].name)
-        console.log(await db.getCollection(collectionNames[i].name).find().toArray())
-    }
 
     const viewCities = []
 
