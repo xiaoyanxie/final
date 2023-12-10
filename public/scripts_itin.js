@@ -33,7 +33,7 @@ function createCard(itinerary) {
             <div class="card-front">
                 <div class="card-content-container">
                     <h2>${itinerary.name}</h2>
-                    <img src="${itinerary.image}" alt="${itinerary.name}">
+                    <img src="${itinerary.image}" alt="${itinerary.name}" style="height: 200px;">
                 </div>
             </div>
             <div class="card-back">
@@ -58,7 +58,7 @@ function renderItineraries(data) {
 
 document.addEventListener('DOMContentLoaded', async function() {
     const fetchedData = await fetchItinerariesData();
-    
+
     if (fetchedData.length > 0) {
         renderItineraries(fetchedData);
     } else {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             window.location.href = 'explorePage.html?city=' + encodeURIComponent(cityName);
         }
     });
-    
+
     var activeLink = document.getElementById('page2Link');
     if (activeLink) {
         activeLink.addEventListener('click', function(e) {

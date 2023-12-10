@@ -1,27 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { MongoClient, ObjectId } = require('mongodb'); 
-const path = require('path'); 
+const { MongoClient, ObjectId } = require('mongodb');
+const path = require('path');
+const db = require("./db")
+const mongoose = require("mongoose");
 
 const app = express();
 const port = process.env.PORT || 3001;
-const uri = ""; //Add DB URI Here 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
-
-
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-async function connectDB() {
-  try {
-    await client.connect();
-    console.log('Connected to MongoDB');
-    return client.db();
-  } catch (error) {
-    console.error('Could not connect to MongoDB:', error);
-    process.exit(1);
-  }
-}
 
 // Routes
 app.get('/', (req, res) => {
@@ -37,12 +24,12 @@ app.get('/my-itineraries', (req, res) => {
 });
 
 app.get('/api/cities', async (req, res) => {
-    const db = await connectDB();
-    const citiesCollection = db.collection('cities');
-    
+    const mongo = mongoose.connection.getClient();
+    const citiesCollection = db.getCollection('cities');
+
     try {
         const cities = await citiesCollection.find({}).toArray();
-        res.json(cities); 
+        res.json(cities);
     } catch (error) {
         console.error('Error fetching cities:', error);
         res.status(500).json({ error: 'Error fetching cities' });
@@ -50,8 +37,7 @@ app.get('/api/cities', async (req, res) => {
 });
 
 app.get('/api/itineraries', async (req, res) => {
-    const db = await connectDB();
-    const itinerariesCollection = db.collection('itineraries');
+    const itinerariesCollection = db.getCollection('itineraries');
     const itineraries = await itinerariesCollection.find({}).toArray();
     res.json(itineraries);
 });
@@ -61,7 +47,7 @@ app.get('/explore', (req, res) => {
 });
 
 async function fetchPlacesFromGoogle(query) {
-    const apiKey = GOOGLE_API_KEY; 
+    const apiKey = GOOGLE_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&key=${apiKey}`;
     const response = await fetch(url);
     const data = await response.json();
@@ -79,16 +65,15 @@ app.get('/search', async (req, res) => {
 });
 
 app.post('/create-itinerary', async (req, res) => {
-    const db = await connectDB();
-    const itinerariesCollection = db.collection('itineraries');
+    const itinerariesCollection = db.getCollection('itineraries');
 
     try {
         const cities = req.body.cities ? req.body.cities.map(city => ({
-            city_id: city.city_id, 
+            city_id: city.city_id,
             arrival_date: new Date(city.arrival_date),
             departure_date: new Date(city.departure_date),
             places: city.places ? city.places.map(place => ({
-                place_id: place.place_id, 
+                place_id: place.place_id,
                 day: parseInt(place.day),
                 time: place.time
             })) : []
@@ -114,7 +99,7 @@ app.post('/:itineraryId/addPlace', async (req, res) => {
         const itineraryId = req.params.itineraryId;
         const placeData = req.body;
 
-        const updatedData = await db.collection('itineraries').updateOne(
+        const updatedData = await db.getCollection('itineraries').updateOne(
             { _id: ObjectId(itineraryId) },
             { $push: { places: placeData } }
         );

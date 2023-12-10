@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TravelPlaner places</title>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* set image size to 10% of the screen */
+        img {
+            max-height: 350px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-lTyiOQtkTztPb4brRo0y18EwXL5oBBY&callback=initMap&libraries=places">
+</script>
+
+<script>
+    let map;
+    let service;
+    let infowindow;
+
+    function initMap() {
+        // get city from url parameter
+        let city = new URLSearchParams(window.location.search).get('city') ?? 'Boston'
+
+        infowindow = new google.maps.InfoWindow()
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15, //Can be modified later
+        })
+
+        service = new google.maps.places.PlacesService(map)
+
+        // Get the geolocation of the city
+        const geocoder = new google.maps.Geocoder()
+        geocoder.geocode({ 'address': city }, function(results, status) {
+            if (status === 'OK') {
+                const cityLocation = results[0].geometry.location
+                map.setCenter(cityLocation)
+
+                // Search for museums, restaurants bars and attractions with radius of 4000 meters
+                const types = ['museum', 'restaurant', 'bar', 'tourist_attraction']
+                types.forEach(type => {
+                    const request = {
+                        location: cityLocation,
+                        radius: '4000',
+                        type: [type]
+                    };
+                    service.nearbySearch(request, (results, status) => {
+                        if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                            for (let i = 0; i < results.length; i++) {
+                                createMarker(results[i], type)
+                            }
+                        }
+                    })
+                })
+            }
+        })
+    }
+
+    //Function: create a marker for the museums, bars, restaurants, attractions,wait to be added: ARCHITECTURE(/CHURCH), OPEN MARKET
+    function createMarker(place, type) {
+        if (!place.geometry || !place.geometry.location)
+            return;
+
+        // Specify a custom icon based on the type of place
+        let icon;
+        switch (type) {
+            case 'museum':
+                icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'; // Blue icon for museums
+                break;
+            case 'bar':
+                icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'; // Green icon for bars
+                break;
+            case 'restaurant':
+                icon = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'; // Yellow icon for restaurants
+                break;
+            case 'tourist_attraction':
+                icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'; // Red icon for attractions
+                break;
+        }
+
+        const marker = new google.maps.Marker({
+            map,
+            position: place.geometry.location,
+            icon: icon
+        })
+        //Click to see the name of the place
+        google.maps.event.addListener(marker, "click", () => {
+            infowindow.setContent(place.name || "")
+            infowindow.open(map, marker);
+            getPlaceDetails(place.place_id)
+            // center focus on marker
+            map.setCenter(marker.getPosition())
+        })
+    }
+    //Function: Get the pic of the marked museums, restaurants or attractions
+    function getPlaceDetails(placeId, marker) {
+        var request = {
+            placeId: placeId,
+            fields: ['name', 'formatted_address', 'photos']
+        }
+
+        service.getDetails(request, function (place, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                let name = place.name || "";
+                if (place.formatted_address) {
+                    name += '<br>Address: ' + place.formatted_address;
+                }
+                if (place.photos) {
+                    let photoUrl = place.photos[0].getUrl()
+                    name += '<br><div style="text-align: center"><img src="' + photoUrl + '"></div>';
+                }
+                infowindow.setContent(name);
+                infowindow.open(map, marker);
+            }
+        });
+    }
+    window.initMap = initMap;
+</script>
+</body>
+</html>
